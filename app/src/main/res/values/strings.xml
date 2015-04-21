@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">ClipBox</string>
+
+    <string name="alert_delete_clip">Want to delete?</string>
+
+    <string name="button_close_uppercase">CLOSE</string>
+    <string name="button_delete_uppercase">DELETE</string>
+
+    <string name="label_about">About</string>
+    <string name="label_about_dialog_content_general">An enhanced clipboard manager to save, edit and share your favorite text.\n\nCopyright © 2015 Volcano.</string>
+    <string name="label_clip_edited">Text Edited</string>
+    <string name="label_dialog_edit_clip">Edit text</string>
+    <string name="label_refresh">Refresh</string>
+    <string name="label_share">SHARE</string>
+    <string name="label_share_choose_app">Share via…</string>
+
+    <string name="label_intro_1">Welcome to ClipBox. :)</string>
+    <string name="label_intro_2">Copy your text anywhere you want and see them here.</string>
+    <string name="label_intro_3">Edit and share your favorite texts with your friends.</string>
+
+    <string name="share_subject">ClipBox App</string>
+    <string name="share_body" formatted="false">\nClipBox is an enhanced clipboard manager to save, edit and share your favorite texts with your friends.\n\n %s \n\n %s</string>
+
+    <string name="toast_load_share_client_failed">Unable to load share client</string>
+    <string name="toast_copied_clipbox">Copied to ClipBox.</string>
+
+</resources>

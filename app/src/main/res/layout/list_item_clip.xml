@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_8">
+
+    <TextView
+        android:id="@+id/button_discard"
+        android:layout_width="@dimen/row_action_icon_size"
+        android:layout_height="@dimen/row_action_icon_size"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_action_discard"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/button_share"
+        android:layout_width="@dimen/row_action_icon_size"
+        android:layout_height="@dimen/row_action_icon_size"
+        android:layout_toLeftOf="@id/button_discard"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_8"
+        android:background="@drawable/ic_action_share"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/text_clip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/button_share"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_8"
+        android:maxLines="4"
+        android:ellipsize="end"
+        tools:ignore="RtlHardcoded"
+        style="@style/Text.MediumGrey14"/>
+
+</RelativeLayout>
