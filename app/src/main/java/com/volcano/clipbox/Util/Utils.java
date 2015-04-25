@@ -11,15 +11,43 @@ import com.volcano.clipbox.ClipBoxApplication;
 import com.volcano.clipbox.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Application utilities
  */
 public class Utils {
     private static final String TAG = Utils.class.getName();
+
+    /**
+     * Convert {@link Date} to String
+     * @param date The date
+     */
+    public static String DateToString(Date date) {
+        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+        return format.format(date);
+    }
+
+    /**
+     * Convert {@link String} to Date
+     * @param str The string date
+     */
+    public static Date StringToDate(String str) {
+        Date date = null;
+        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+        try {
+            date = format.parse(str);
+        }
+        catch (ParseException e) {
+            Log.e(TAG, "Error in parse string to date.");
+        }
+
+        return date;
+    }
 
     /**
      * @return Application version name
@@ -35,6 +63,24 @@ public class Utils {
         }
     }
 
+    /**
+     * @param num The number
+     * @return True if num is greater than 0, false otherwise
+     */
+    public static boolean getBoolean(int num) {
+        return num == 1;
+    }
+
+    /**
+     * @return 1 if value is true, 0 otherwise
+     */
+    public static int getInt(boolean value) {
+        return value ? 1 : 0;
+    }
+
+    /**
+     * @return Return now time as Date
+     */
     public static Date getDate() {
         Calendar cal = Calendar.getInstance();
         return cal.getTime();
