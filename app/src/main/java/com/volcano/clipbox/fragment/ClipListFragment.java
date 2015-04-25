@@ -1,4 +1,4 @@
-package com.volcano.clipbox;
+package com.volcano.clipbox.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.volcano.clipbox.ClipBoxApplication;
+import com.volcano.clipbox.R;
 import com.volcano.clipbox.Util.Utils;
 import com.volcano.clipbox.analytics.MixpanelManager;
 import com.volcano.clipbox.model.Clip;
@@ -99,6 +101,11 @@ public class ClipListFragment extends Fragment {
         mClipAdapter.notifyDataSetChanged();
 
         MixpanelManager.getIntance().trackLoadClipEvent(mClips.size());
+    }
+
+    public void loadClips(String query) {
+        mClips = DatabaseHelper.getInstance().getClips(query);
+        mClipAdapter.notifyDataSetChanged();
     }
 
     private class ClipAdapter extends BaseAdapter {

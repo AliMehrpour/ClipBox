@@ -1,9 +1,10 @@
-package com.volcano.clipbox;
+package com.volcano.clipbox.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,13 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.volcano.clipbox.ClipBoxApplication;
+import com.volcano.clipbox.R;
 import com.volcano.clipbox.Util.Utils;
 import com.volcano.clipbox.analytics.MixpanelManager;
+import com.volcano.clipbox.fragment.ClipListFragment;
 import com.volcano.clipbox.service.ClipboardListenerService;
 
 public class MainActivity extends ActionBarActivity {
 
     private ClipListFragment mFragment;
+    private SearchView mSearchView;
+    private MenuItem mSearchMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +49,34 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        mSearchMenu = menu.findItem(R.id.menu_search);
+
+        mSearchView = (SearchView) mSearchMenu.getActionView();
+        mSearchView.setQueryHint(getString(R.string.label_enter_word));
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!mSearchView.isIconified()) {
+                    mFragment.loadClips(s);
+                }
+
+                return false;
+            }
+        });
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
-        if(id == R.id.about) {
+        if(id == R.id.menu_about) {
             final LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.dialog_about, null);
             final TextView textVersion = (TextView) layout.findViewById(R.id.text_app_version);
             textVersion.setText(Utils.getAppVersionName());
@@ -65,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                     })
                     .show();
         }
-        else if (id == R.id.share) {
+        else if (id == R.id.menu_share) {
             MixpanelManager.getIntance().track(MixpanelManager.EVENT_SHARE_APP);
 
             final String googlePlayLink = String.format("https://play.google.com/store/apps/details?id=%s", ClipBoxApplication.getInstance().getPackageName());
@@ -75,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
                     getString(R.string.share_subject, getString(R.string.app_name), Utils.getAppVersionName()),
                     getString(R.string.share_body, googlePlayLink, cafeBazarLink));
         }
-        else if (id == R.id.refresh) {
+        else if (id == R.id.menu_refresh) {
             mFragment.loadClips();
         }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.volcano.clipbox.ClipBoxApplication;
@@ -73,9 +74,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public synchronized ArrayList<Clip> getClips() {
+        return getClips(null);
+    }
+
+    public synchronized ArrayList<Clip> getClips(String query) {
         final ArrayList<Clip> clips = new ArrayList<>();
         final SQLiteDatabase db = this.getReadableDatabase();
-        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLIPS + " ORDER BY " + COLUMN_ID + " DESC", null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLIPS +
+                (TextUtils.isEmpty(query) ? "" : " WHERE " + COLUMN_VALUE + " LIKE '%" + query + "%'")
+                + " ORDER BY " + COLUMN_ID + " DESC", null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

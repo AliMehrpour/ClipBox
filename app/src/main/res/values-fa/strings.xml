@@ -11,7 +11,10 @@
         \n\nCopyright © 2015 Volcano.</string>
     <string name="label_clip_edited">ویرایش انجام شد</string>
     <string name="label_dialog_edit_clip">ویرایش</string>
+    <string name="label_enter_word">مورد جستجو…</string>
+    <string name="label_favorite">موردعلاقه</string>
     <string name="label_refresh">بروز رسانی</string>
+    <string name="label_search">جستجو</string>
     <string name="label_share">اشتراک</string>
     <string name="label_share_choose_app">اشتراک از طریق…</string>
 

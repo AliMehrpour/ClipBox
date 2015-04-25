@@ -10,7 +10,10 @@
     <string name="label_about_dialog_content_general">An enhanced clipboard manager to save, edit and share your favorite text.\n\nCopyright © 2015 Volcano.</string>
     <string name="label_clip_edited">Text Edited</string>
     <string name="label_dialog_edit_clip">Edit text</string>
+    <string name="label_enter_word">Enter something…</string>
+    <string name="label_favorite">Favorite</string>
     <string name="label_refresh">Refresh</string>
+    <string name="label_search">Search</string>
     <string name="label_share">SHARE</string>
     <string name="label_share_choose_app">Share via…</string>
 
