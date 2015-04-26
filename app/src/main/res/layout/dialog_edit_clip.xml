@@ -6,6 +6,7 @@
     android:id="@+id/edit_clip"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    android:padding="@dimen/margin_12"
     android:background="@drawable/shape_edit_text_bacgroud"
-    style="@style/Text.MediumGrey13"
-    tools:ignore="TextFields" />
+    style="@style/Text.NormalGrey15"
+    tools:ignore="TextFields"/>

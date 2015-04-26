@@ -25,13 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            style="@style/Text.MediumGrey18" />
+            style="@style/Text.BoldGrey18" />
 
         <TextView
             android:id="@+id/text_app_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Text.MediumGreyDr14" />
+            style="@style/Text.BoldGreyDr14" />
 
         <TextView
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:layout_marginTop="@dimen/margin_4"
             android:autoLink="email"
             android:text="@string/link_email"
-            style="@style/Text.RegularGreyDarker16" />
+            style="@style/Text.NormalGrey16" />
 
     </LinearLayout>
 

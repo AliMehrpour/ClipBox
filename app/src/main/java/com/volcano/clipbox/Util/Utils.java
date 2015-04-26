@@ -28,7 +28,7 @@ public class Utils {
      * @param date The date
      */
     public static String DateToString(Date date) {
-        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         return format.format(date);
     }
 
@@ -38,7 +38,7 @@ public class Utils {
      */
     public static Date StringToDate(String str) {
         Date date = null;
-        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+        final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         try {
             date = format.parse(str);
         }
@@ -86,6 +86,31 @@ public class Utils {
         return cal.getTime();
     }
 
+    /**
+     * Return suitable format of Date
+     * @param date The date
+     * @return Formatted Date
+     */
+    public static String getTimeSpan(Date date) {
+        final Date now = new Date();
+        SimpleDateFormat sdfDate;
+        final String dateFormatted;
+        sdfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        if (sdfDate.format(date).equals(sdfDate.format(now))) {
+            dateFormatted = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
+        }
+        else {
+            sdfDate = new SimpleDateFormat("yyyy", Locale.getDefault());
+            if (sdfDate.format(date).equals(sdfDate.format(now))) {
+                dateFormatted = new SimpleDateFormat("EEE, MMM dd", Locale.getDefault()).format(date);
+            }
+            else {
+                dateFormatted = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(date);
+            }
+        }
+
+        return dateFormatted;
+    }
     /**
      * Launch an share client
      * @param activity An Activity context for launching the email client

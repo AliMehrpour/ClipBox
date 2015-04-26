@@ -9,15 +9,15 @@ public class Clip {
     public int id;
     public String value;
     public Date createDate;
-    public boolean favorited;
+    public boolean favorite;
 
     private static Clip sLastClip = null;
 
-    public Clip(int id, String value, Date createDate, boolean favorited) {
+    public Clip(int id, String value, Date createDate, boolean favorite) {
         this.id = id;
         this.value = value;
         this.createDate = createDate;
-        this.favorited = favorited;
+        this.favorite = favorite;
     }
 
     public static void setLastCLip(Clip lastCLip) {
@@ -26,5 +26,9 @@ public class Clip {
 
     public static Clip getLastClip() {
         return sLastClip;
+    }
+
+    public Clip toggleFavorite() {
+        return new Clip(id, value, createDate, !favorite);
     }
 }

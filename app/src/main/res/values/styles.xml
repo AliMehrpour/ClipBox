@@ -8,38 +8,42 @@
         <item name="android:textCursorDrawable">@drawable/cursor_white</item>
     </style>
 
-    <style name="Widget.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-        <item name="android:background">?attr/colorPrimary</item>
-    </style>
-
-    <style name="Text.MediumGrey14" parent="@android:style/TextAppearance.Holo">
-        <item name="android:textColor">@color/grey_3</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
-    </style>
-
-    <style name="Text.MediumGrey13" parent="@android:style/TextAppearance.Holo">
-        <item name="android:textColor">@color/grey_3</item>
-        <item name="android:textSize">@dimen/text_size_13</item>
-        <item name="android:padding">@dimen/margin_12</item>
-    </style>
-
-    <style name="Text.MediumGrey18" parent="@android:style/TextAppearance.Holo">
+    <style name="Text.BoldGrey18" parent="@android:style/TextAppearance.Holo">
         <item name="android:textSize">@dimen/text_size_18</item>
         <item name="android:textColor">@color/grey_6</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.MediumGreyDr14" parent="@android:style/TextAppearance.Holo">
+    <style name="Text.BoldGreyDr14" parent="@android:style/TextAppearance.Holo">
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/grey_6</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.RegularGreyDarker16" parent="@android:style/TextAppearance.Holo">
+    <style name="Text.NormalPurple12" parent="@android:style/TextAppearance.Holo">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="Text.NormalGrey15" parent="@android:style/TextAppearance.Holo">
+        <item name="android:textColor">@color/grey_3</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
+    </style>
+
+    <style name="Text.NormalGreyDarker15" parent="@android:style/TextAppearance.Holo">
+        <item name="android:textColor">@color/grey_3</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
+    </style>
+
+    <style name="Text.NormalGrey16" parent="@android:style/TextAppearance.Holo">
         <item name="android:textColor">@color/grey_4</item>
         <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="Widget.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
 </resources>

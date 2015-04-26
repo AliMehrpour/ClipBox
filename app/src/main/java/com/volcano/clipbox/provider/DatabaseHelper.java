@@ -51,9 +51,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_FAVORITE + " INTEGER)");
 
         // Default Clips
-        db.execSQL("INSERT INTO " + TABLE_CLIPS + " VALUES(1, '" + ClipBoxApplication.getInstance().getString(R.string.label_intro_3) + "', '2015-01-01 12:00:00', 0)");
-        db.execSQL("INSERT INTO " + TABLE_CLIPS + " VALUES(2, '" + ClipBoxApplication.getInstance().getString(R.string.label_intro_2) + "', '2015-01-01 12:00:00', 0)");
-        db.execSQL("INSERT INTO " + TABLE_CLIPS + " VALUES(3, '" + ClipBoxApplication.getInstance().getString(R.string.label_intro_1) + "', '2015-01-01 12:00:00', 0)");
+        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_version_2) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
+        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_1) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
+        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_2) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
+        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_3) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
     }
 
     @Override
@@ -61,13 +62,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 1:
                 db.execSQL("ALTER TABLE " + TABLE_CLIPS + " ADD COLUMN " + COLUMN_FAVORITE + " INTEGER DEFAULT 0;");
+                db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_version_2) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
                 // We want many updates, So no break statement here
-
             case 2:
                 // Upgrade for version 3
         }
 
-        MixpanelManager.getIntance().trackDatabaseUpgradedEvent(oldVersion, newVersion);
+        MixpanelManager.getInstance().trackDatabaseUpgradedEvent(oldVersion, newVersion);
         Log.i(TAG, "Database upgraded from " + oldVersion + " to " + newVersion);
     }
 
@@ -75,7 +76,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final ContentValues values = new ContentValues();
         values.put(COLUMN_VALUE, (clip.value));
         values.put(COLUMN_CREATE_DATE, Utils.DateToString(clip.createDate));
-        values.put(COLUMN_FAVORITE, Utils.getInt(clip.favorited));
+        values.put(COLUMN_FAVORITE, Utils.getInt(clip.favorite));
 
         final SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_CLIPS, null, values);
@@ -91,16 +92,30 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG, "Clip deleted from database.");
     }
 
-    public synchronized ArrayList<Clip> getClips() {
-        return getClips(null);
-    }
-
     public synchronized ArrayList<Clip> getClips(String query) {
         final ArrayList<Clip> clips = new ArrayList<>();
         final SQLiteDatabase db = this.getReadableDatabase();
         final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLIPS +
                 (TextUtils.isEmpty(query) ? "" : " WHERE " + COLUMN_VALUE + " LIKE '%" + query + "%'")
-                + " ORDER BY " + COLUMN_ID + " DESC", null);
+                + " ORDER BY " + COLUMN_CREATE_DATE + " DESC", null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            final Clip clip = fromCursor(cursor);
+            clips.add(clip);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        closeDatabase(db);
+
+        return  clips;
+    }
+
+    public synchronized ArrayList<Clip> getFavoriteClips() {
+        final ArrayList<Clip> clips = new ArrayList<>();
+        final SQLiteDatabase db = this.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLIPS +
+                " WHERE " + COLUMN_FAVORITE + " = 1 ORDER BY " + COLUMN_CREATE_DATE + " DESC", null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -133,7 +148,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final ContentValues values = new ContentValues();
         values.put(COLUMN_VALUE, clip.value);
         values.put(COLUMN_CREATE_DATE, Utils.DateToString(clip.createDate));
-        values.put(COLUMN_FAVORITE, Utils.getInt(clip.favorited));
+        values.put(COLUMN_FAVORITE, Utils.getInt(clip.favorite));
 
         final SQLiteDatabase db = this.getWritableDatabase();
         final int i = db.update(TABLE_CLIPS, values , COLUMN_ID + " = ?" , new String[]{String.valueOf(clip.id)});

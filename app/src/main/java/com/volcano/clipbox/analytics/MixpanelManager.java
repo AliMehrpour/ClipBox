@@ -17,15 +17,17 @@ public class MixpanelManager {
 
     private static final MixpanelManager sInstance = new MixpanelManager();
 
-    public static final String EVENT_APP_LAUNCHED       = "App Launched";
-    public static final String EVENT_DATABASE_UPGRAGED  = "Database Upgraded";
+    public static final String EVENT_APP_INSTALLED      = "App Installed";
+    public static final String EVENT_DATABASE_UPGRADED  = "Database Upgraded";
     public static final String EVENT_EDIT_CLIP_ITEM     = "Edit Clip Item";
     public static final String EVENT_LOAD_CLIP_LIST     = "Load Clip List";
     public static final String EVENT_SHARE_APP          = "Share App";
+    public static final String EVENT_SEARCH_CLIP        = "Search Clip";
 
     private static final String PARAM_CLIP_COUNT     = "Clip Count";
-    private static final String PARAM_OLD_VERSION    = "Old Version";
+    private static final String PARAM_DEVICE_ID      = "Device Id";
     private static final String PARAM_NEW_VERSION    = "New Version";
+    private static final String PARAM_OLD_VERSION    = "Old Version";
 
     private static final String TOKEN = "47756b211e509eb050195d4ad5d2e980";
     private MixpanelAPI mMixpanelAPI;
@@ -40,7 +42,7 @@ public class MixpanelManager {
     /**
      * @return Return Singleton Instance
      */
-    public static MixpanelManager getIntance() {
+    public static MixpanelManager getInstance() {
         return sInstance;
     }
 
@@ -72,17 +74,19 @@ public class MixpanelManager {
         }
     }
 
-    public void trackLoadClipEvent(int clipCount) {
+    public void trackAppInstalledEvent() {
         final JSONObject params = new JSONObject();
 
         try {
-            params.put(PARAM_CLIP_COUNT, clipCount);
+            params.put(PARAM_DEVICE_ID, Settings.Secure.getString(ClipBoxApplication.getInstance().getContentResolver(),
+                    Settings.Secure.ANDROID_ID));
 
-            track(EVENT_LOAD_CLIP_LIST, params);
+            track(EVENT_APP_INSTALLED, params);
         }
         catch (JSONException e) {
             Log.e(TAG, "Error in creating json object");
         }
+
     }
 
     public void trackDatabaseUpgradedEvent(int oldVersion, int newVersion) {
@@ -92,7 +96,22 @@ public class MixpanelManager {
             params.put(PARAM_OLD_VERSION, oldVersion);
             params.put(PARAM_NEW_VERSION, newVersion);
 
-            track(EVENT_DATABASE_UPGRAGED, params);
+            track(EVENT_DATABASE_UPGRADED, params);
+        }
+        catch (JSONException e) {
+            Log.e(TAG, "Error in creating json object");
+        }
+    }
+
+    public void trackLoadClipEvent(int clipCount) {
+        final JSONObject params = new JSONObject();
+
+        try {
+            params.put(PARAM_CLIP_COUNT, clipCount);
+            params.put(PARAM_DEVICE_ID, Settings.Secure.getString(ClipBoxApplication.getInstance().getContentResolver(),
+                    Settings.Secure.ANDROID_ID));
+
+            track(EVENT_LOAD_CLIP_LIST, params);
         }
         catch (JSONException e) {
             Log.e(TAG, "Error in creating json object");

@@ -2,6 +2,7 @@ package com.volcano.clipbox;
 
 import android.app.Application;
 
+import com.volcano.clipbox.Util.PrefUtils;
 import com.volcano.clipbox.analytics.MixpanelManager;
 
 /**
@@ -20,7 +21,11 @@ public class ClipBoxApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        MixpanelManager.getIntance().track(MixpanelManager.EVENT_APP_LAUNCHED);
+        final boolean trackedAppInstalled = PrefUtils.getPref(PrefUtils.PREF_TRACK_APP_INSTALLED, true);
+        if (trackedAppInstalled) {
+            PrefUtils.setPref(PrefUtils.PREF_TRACK_APP_INSTALLED, false);
+            MixpanelManager.getInstance().trackAppInstalledEvent();
+        }
     }
 
     public static ClipBoxApplication getInstance() {
