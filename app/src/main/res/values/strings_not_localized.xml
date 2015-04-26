@@ -2,6 +2,6 @@
 
 <resources>
 
-    <string name="link_email"><a href="support@eSecureBox.net" target="_top">support@eSecureBox.net</a></string>
+    <string name="link_email" translatable="false"><a href="support@eSecureBox.net" target="_top">support@eSecureBox.net</a></string>
 
 </resources>

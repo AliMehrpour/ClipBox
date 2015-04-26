@@ -3,8 +3,6 @@
 
     <string name="alert_delete_clip">Want to delete?</string>
 
-    <string name="bullet">&#160;&#160;&#8226;&#160;&#160;</string>
-
     <string name="button_close_uppercase">CLOSE</string>
     <string name="button_delete_uppercase">DELETE</string>
 
