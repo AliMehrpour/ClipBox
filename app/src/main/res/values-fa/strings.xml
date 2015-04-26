@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">کلیپ باکس</string>
+
+    <string name="alert_delete_clip">حذف شود ؟</string>
+
+    <string name="button_close_uppercase">بستن</string>
+    <string name="button_delete_uppercase">حذف</string>
+
+    <string name="label_about">درباره</string>
+    <string name="label_about_dialog_content_general">ابزاری جهت مدیریت کلیپ بورد با قابلیت های ذخیره سازی، ویرایش و به اشتراک گذاری مطالب مورد علاقه با سایر دوستان
+        \n\nCopyright © 2015 Volcano.</string>
+    <string name="label_clip_edited">ویرایش انجام شد</string>
+    <string name="label_dialog_edit_clip">ویرایش</string>
+    <string name="label_enter_word">مورد جستجو…</string>
+    <string name="label_favorite">موردعلاقه</string>
+    <string name="label_no_category">بدون گروه</string>
+    <string name="label_refresh">بازخوانی</string>
+    <string name="label_search">جستجو</string>
+    <string name="label_share">اشتراک</string>
+    <string name="label_share_choose_app">اشتراک از طریق…</string>
+
+    <string name="label_intro_1"> به برنامه کلیپ باکس خوش آمدید.</string>
+    <string name="label_intro_2">مطالب خود را از هر جا که می خواهید کپی کنید و در اینجا ببینید.</string>
+    <string name="label_intro_3">می توانید مطالب خود را ویرایش نموده و با دوستان خود به اشتراک بگذارید.</string>
+    <string name="label_intro_version_2">امکانات جدید کلیپ باکس، نسخه ۱.۱.۰\n
+        &#160;&#160;&#8226;&#160;&#160;بهبود کارایی\n
+        &#160;&#160;&#8226;&#160;&#160;رابط کاربری جدید\n
+        &#160;&#160;&#8226;&#160;&#160;امکان جستجو\n
+        &#160;&#160;&#8226;&#160;&#160;امکان افزودن کلیپ به لیست علاقمندی\n
+        &#160;&#160;&#8226;&#160;&#160;مشاهده لیست علاقمندی بوسیله آیکن ستاره\n
+        &#160;&#160;&#8226;&#160;&#160;نگه داشتن روی کلیپ جهت حذف آن\n
+     </string>
+
+    <string name="share_subject">برنامه کلیپ باکس</string>
+    <string name="share_body" formatted="false">کلیپ باکس ابزاری است جهت مدیریت کلیپ بورد با امکانات ذخیره سازی، ویرایش و به اشتراک گذاری مطالب موردعلاقه با سایر دوستان.
+\n\n
+برنامه در پلی استور
+\n%s \n\n
+
+برنامه در کافه بازار
+ \n%s</string>
+
+    <string name="toast_load_share_client_failed">برنامه مناسب اشتراک گذاری بر روی دستگاه یافت نشد</string>
+    <string name="toast_copied_clipbox">در کلیپ باکس کپی شد</string>
+
+</resources>
