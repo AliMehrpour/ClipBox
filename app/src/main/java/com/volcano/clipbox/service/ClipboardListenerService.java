@@ -55,9 +55,16 @@ public class ClipboardListenerService extends Service {
 
                                         // Check if last clip in database is equal to clipboard, Don't in database
                                         // Save in database
-                                        final Clip lastClip = DatabaseHelper.getInstance().getLastClip();
+                                        Clip lastClip = Clip.getLastClip();
+                                        if (lastClip == null) {
+                                            lastClip = DatabaseHelper.getInstance().getLastClip();
+                                            Clip.setLastCLip(lastClip);
+                                        }
+
                                         if (lastClip == null || !lastClip.value.equals(clipString)) {
-                                            DatabaseHelper.getInstance().addClip(new Clip(0, clipString, Utils.getDate()));
+                                            final Clip clip = new Clip(0, clipString, Utils.getDate(), false);
+                                            Clip.setLastCLip(clip);
+                                            DatabaseHelper.getInstance().addClip(clip);
 
                                             // Show toast
                                             handler.post(new Runnable() {

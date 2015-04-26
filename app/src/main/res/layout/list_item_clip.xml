@@ -5,38 +5,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/margin_8">
+    android:padding="@dimen/margin_4">
 
     <TextView
-        android:id="@+id/button_discard"
-        android:layout_width="@dimen/row_action_icon_size"
-        android:layout_height="@dimen/row_action_icon_size"
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_4"
+        style="@style/Text.NormalPurple12" />
+
+    <TextView
+        android:id="@+id/text_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/ic_action_discard"
-        tools:ignore="RtlHardcoded" />
+        android:paddingRight="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_4"
+        android:text="@string/label_no_category"
+        style="@style/Text.NormalPurple12" />
 
     <TextView
         android:id="@+id/button_share"
         android:layout_width="@dimen/row_action_icon_size"
         android:layout_height="@dimen/row_action_icon_size"
-        android:layout_toLeftOf="@id/button_discard"
+        android:paddingRight="@dimen/margin_4"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/text_group"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_8"
         android:background="@drawable/ic_action_share"
         tools:ignore="RtlHardcoded" />
+
+    <ImageButton
+        android:id="@+id/button_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/text_date"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_star" />
 
     <TextView
         android:id="@+id/text_clip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/button_share"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_8"
+        android:layout_toRightOf="@id/button_favorite"
+        android:layout_below="@id/text_date"
+        android:layout_marginRight="@dimen/margin_4"
+        android:layout_marginBottom="@dimen/margin_4"
         android:maxLines="4"
         android:ellipsize="end"
         tools:ignore="RtlHardcoded"
-        style="@style/Text.MediumGrey14"/>
+        style="@style/Text.NormalGreyDarker15"/>
 
 </RelativeLayout>

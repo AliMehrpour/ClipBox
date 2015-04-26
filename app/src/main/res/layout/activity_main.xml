@@ -26,6 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:name="com.volcano.clipbox.ClipListFragment" />
+        android:name="com.volcano.clipbox.fragment.ClipListFragment" />
 
 </RelativeLayout>
