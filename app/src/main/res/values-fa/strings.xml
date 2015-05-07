@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">کلیپ باکس</string>
 
+    <string name="alert_copy_clip">در کلیپ باکس کپی شود؟</string>
     <string name="alert_delete_clip">حذف شود ؟</string>
 
+    <string name="button_cancel_uppercase">انصراف</string>
     <string name="button_close_uppercase">بستن</string>
+    <string name="button_copy_uppercase">کپی شود</string>
     <string name="button_delete_uppercase">حذف</string>
 
     <string name="label_about">درباره</string>
@@ -16,6 +19,7 @@
     <string name="label_no_category">بدون گروه</string>
     <string name="label_refresh">بازخوانی</string>
     <string name="label_search">جستجو</string>
+    <string name="label_settings">تنظیمات</string>
     <string name="label_share">اشتراک</string>
     <string name="label_share_choose_app">اشتراک از طریق…</string>
 
@@ -31,6 +35,17 @@
         &#160;&#160;&#8226;&#160;&#160;نگه داشتن روی کلیپ جهت حذف آن\n
      </string>
 
+    <string name="preference_app_setting_category_title">تنطیمات برنامه</string>
+
+    <string name="preference_app_setting_confirm_copy_title">تایید کپی</string>
+    <string name="preference_app_setting_confirm_copy_summery">جهت کپی در کلیپ باکس نیاز به تایید است؟</string>
+
+    <string name="preference_other_about_title">درباره</string>
+    <string name="preference_other_category_title">دیگر</string>
+    <string name="preference_other_feedback_title">نظر دهی</string>
+    <string name="preference_other_rate_title">امتیاز دهی</string>
+    <string name="preference_other_share_title">اشتراک گذاری</string>
+
     <string name="share_subject">برنامه کلیپ باکس</string>
     <string name="share_body" formatted="false">کلیپ باکس ابزاری است جهت مدیریت کلیپ بورد با امکانات ذخیره سازی، ویرایش و به اشتراک گذاری مطالب موردعلاقه با سایر دوستان.
 \n\n
@@ -40,6 +55,7 @@
 برنامه در کافه بازار
  \n%s</string>
 
+    <string name="toast_load_email_client_failed">برنامه لازم جهت ارسال ایمیل بر روی دستگاه یافت نشد</string>
     <string name="toast_load_share_client_failed">برنامه مناسب اشتراک گذاری بر روی دستگاه یافت نشد</string>
     <string name="toast_copied_clipbox">در کلیپ باکس کپی شد</string>
 
