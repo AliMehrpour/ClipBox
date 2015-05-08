@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import com.volcano.clipbox.R;
 
 /**
- * Settings Activity
+ * Settings Activity for ClipBox
  */
 public class SettingActivity extends ActionBarActivity{
 
