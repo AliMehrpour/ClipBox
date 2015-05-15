@@ -2,7 +2,7 @@
 
 public class MainActivity extends ActionBarActivity {
 
-    private ClipListFragment mFragment;
+    private ClipListFragment mFragment; // Don't delete this
     private VlSearchView mSearchView;
     private MenuItem mSearchMenu;
     private MenuItem mFavoriteMenu;
