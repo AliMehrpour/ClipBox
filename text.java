@@ -1,9 +1,13 @@
+
+
 public class MainActivity extends ActionBarActivity {
 
     private ClipListFragment mFragment;
     private VlSearchView mSearchView;
     private MenuItem mSearchMenu;
     private MenuItem mFavoriteMenu;
+
+    private static final boolean mItsMeeeee;
 
     private boolean mFavoriteLoaded;
 
@@ -23,4 +27,6 @@ public class MainActivity extends ActionBarActivity {
             mFavoriteLoaded = savedInstanceState.getBoolean(Intents.KEY_FAVORITE);
         }
     }
+    
+    // TODO Don't kill the app
 }
