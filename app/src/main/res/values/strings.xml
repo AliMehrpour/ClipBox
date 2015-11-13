@@ -37,10 +37,9 @@
         &#160;&#160;&#8226;&#160;&#160;Use Longclick on clips to Delete\n
      </string>
 
-    <string name="preference_app_setting_category_title">SETTING</string>
-
+    <string name="preference_app_setting_category_title">CLIP</string>
     <string name="preference_app_setting_confirm_copy_title">Copy Confirm</string>
-    <string name="preference_app_setting_confirm_copy_summery">Need to confirm copy to ClipBox?</string>
+    <string name="preference_app_setting_confirm_copy_summery">Confirm Copy to ClipBox?</string>
 
     <string name="preference_other_about_title">About</string>
     <string name="preference_other_category_title">OTHER</string>

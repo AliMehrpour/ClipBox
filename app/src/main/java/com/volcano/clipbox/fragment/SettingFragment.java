@@ -38,7 +38,7 @@ public class SettingFragment extends PreferenceFragment {
                         .setTitle(getString(R.string.label_about))
                         .setView(layout)
                         .setButtonColor(getResources().getColor(R.color.primary_dark))
-                        .setNegativeButton(R.string.button_close_uppercase, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.button_cancel_uppercase, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
                             }

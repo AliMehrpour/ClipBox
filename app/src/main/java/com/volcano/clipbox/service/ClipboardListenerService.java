@@ -56,7 +56,7 @@ public class ClipboardListenerService extends Service {
                             // Handle confirm copy setup
                             final boolean isConfirmCopy = PrefUtils.getPref(getString(R.string.preference_app_setting_confirm_copy_key), false);
                             if (isConfirmCopy) {
-                                AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(ClipBoxApplication.getInstance())
+                                final AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(ClipBoxApplication.getInstance())
                                         .setMessage(getString(R.string.alert_copy_clip))
                                         .setButtonColor(getResources().getColor(R.color.primary_dark))
                                         .setPositiveButton(R.string.button_copy_uppercase, new DialogInterface.OnClickListener() {

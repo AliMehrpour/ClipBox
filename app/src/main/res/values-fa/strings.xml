@@ -35,10 +35,10 @@
         &#160;&#160;&#8226;&#160;&#160;نگه داشتن روی کلیپ جهت حذف آن\n
      </string>
 
-    <string name="preference_app_setting_category_title">تنطیمات برنامه</string>
+    <string name="preference_app_setting_category_title">کلیپ</string>
 
     <string name="preference_app_setting_confirm_copy_title">تایید کپی</string>
-    <string name="preference_app_setting_confirm_copy_summery">جهت کپی در کلیپ باکس نیاز به تایید است؟</string>
+    <string name="preference_app_setting_confirm_copy_summery">تایید کپی در کلیپ باکس؟</string>
 
     <string name="preference_other_about_title">درباره</string>
     <string name="preference_other_category_title">دیگر</string>
