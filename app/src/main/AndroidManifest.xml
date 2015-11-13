@@ -6,13 +6,15 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".ClipBoxApplication">
+        android:name=".ClipBoxApplication"
+        android:supportsRtl="true" >
 
         <service android:enabled="true" android:name="com.volcano.clipbox.service.ClipboardListenerService" />
 
@@ -23,13 +25,19 @@
         </receiver>
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.volcano.clipbox.activity.MainActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.volcano.clipbox.activity.SettingActivity"
+            android:label="@string/label_settings"
+            android:windowSoftInputMode="adjustResize">
         </activity>
 
     </application>
