@@ -23,6 +23,8 @@ public class MixpanelManager {
     public static final String EVENT_LOAD_CLIP_LIST     = "Load Clip List";
     public static final String EVENT_SHARE_APP          = "Share App";
     public static final String EVENT_SEARCH_CLIP        = "Search Clip";
+    public static final String EVENT_AD_LOADED          = "Ad Loaded";
+    public static final String EVENT_AD_FAILED_TO_LOAD  = "Ad Failed To Load";
 
     private static final String PARAM_CLIP_COUNT     = "Clip Count";
     private static final String PARAM_DEVICE_ID      = "Device Id";

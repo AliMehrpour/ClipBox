@@ -7,6 +7,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.volcano.clipbox.ClipBoxApplication;
 import com.volcano.clipbox.Intents;
 import com.volcano.clipbox.R;
@@ -14,6 +15,12 @@ import com.volcano.clipbox.analytics.MixpanelManager;
 import com.volcano.clipbox.fragment.ClipListFragment;
 import com.volcano.clipbox.service.ClipboardListenerService;
 import com.volcano.clipbox.view.VlSearchView;
+
+import org.json.JSONObject;
+
+import ir.adad.client.AdListener;
+import ir.adad.client.AdView;
+import ir.adad.client.Adad;
 
 /**
  * Main Activity
@@ -29,6 +36,10 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize ads
+        Adad.initialize(ClipBoxApplication.getInstance());
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,6 +52,30 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState != null) {
             mFavoriteLoaded = savedInstanceState.getBoolean(Intents.KEY_FAVORITE);
         }
+
+        // Setup ads
+        final AdView adView = (AdView) findViewById(R.id.banner_ad_view);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_AD_LOADED);
+            }
+
+            @Override
+            public void onAdFailedToLoad() {
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_AD_FAILED_TO_LOAD);
+            }
+
+            @Override
+            public void onMessageReceive(JSONObject jsonObject) {
+
+            }
+
+            @Override
+            public void onRemoveAdsRequested() {
+
+            }
+        });
     }
 
     @Override
