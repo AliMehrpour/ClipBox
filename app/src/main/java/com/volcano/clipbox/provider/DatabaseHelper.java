@@ -51,7 +51,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_FAVORITE + " INTEGER)");
 
         // Default Clips
-        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_version_2) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
+        db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_version_1_2_0) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
         db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_1) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
         db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_2) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
         db.execSQL("INSERT INTO " + TABLE_CLIPS + "(" + COLUMN_VALUE + ", " + COLUMN_CREATE_DATE + ", " + COLUMN_FAVORITE + ") VALUES('" + ClipBoxApplication.getInstance().getString(R.string.label_intro_3) + "', '" + Utils.DateToString(Utils.getDate()) + "', 1)");
