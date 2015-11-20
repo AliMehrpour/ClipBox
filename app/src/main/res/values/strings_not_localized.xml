@@ -2,6 +2,14 @@
 
 <resources>
 
+    <string name="email_address_feedback">feedback@eSecureBox.net</string>
+
     <string name="link_email" translatable="false"><a href="support@eSecureBox.net" target="_top">support@eSecureBox.net</a></string>
+
+    <string name="preference_app_setting_confirm_copy_key">preference_app_setting_confirm_copy_key</string>
+    <string name="preference_other_about_key">preference_other_about_key</string>
+    <string name="preference_other_feedback_key">preference_other_feedback_key</string>
+    <string name="preference_other_rate_key">preference_other_rate_key</string>
+    <string name="preference_other_share_key">preference_other_share_key</string>
 
 </resources>

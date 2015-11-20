@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -111,6 +113,58 @@ public class Utils {
 
         return dateFormatted;
     }
+
+    /**
+     * Launch an email client
+     * @param activity An Activity context for launching the email client
+     * @param recipients A {@link java.util.List} of recipients
+     * @param subject The subject
+     */
+    public static void launchEmailClient(Activity activity, List<String> recipients, String subject) {
+        launchEmailClient(activity, recipients, subject, null);
+    }
+
+    /**
+     * Launch an email client
+     * @param activity An Activity context for launching the email client
+     * @param recipients A {@link List} of recipients
+     * @param subject The subject
+     * @param body The body
+     */
+    public static void launchEmailClient(Activity activity, List<String> recipients, String subject, String body) {
+        final Intent intent = new Intent(Intent.ACTION_SENDTO)
+                .setData(Uri.parse("mailto:"))
+                .putExtra(Intent.EXTRA_EMAIL, recipients.toArray(new String[recipients.size()]))
+                .putExtra(Intent.EXTRA_SUBJECT, subject)
+                .putExtra(Intent.EXTRA_TEXT, body);
+
+        try {
+            activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.email_choose_app_title)));
+        }
+        catch (ActivityNotFoundException e) {
+            Log.e(TAG, "Not found any email app on your device");
+            showToast(R.string.toast_load_email_client_failed);
+        }
+    }
+
+    /**
+     * Launch play store client. If play store client isn't installed on device or disabled, open
+     * play store in web browser
+     */
+    public static void launchPlayStore() {
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setData(Uri.parse(String.format("market://details?id=%s", ClipBoxApplication.getInstance().getPackageName())));
+
+        if (intent.resolveActivity(ClipBoxApplication.getInstance().getPackageManager()) != null) {
+            ClipBoxApplication.getInstance().startActivity(intent);
+        }
+        else {
+            intent.setData(Uri.parse(String.format("https://play.google.com/store/apps/details?id=%s", ClipBoxApplication.getInstance().getPackageName())));
+            ClipBoxApplication.getInstance().startActivity(intent);
+        }
+    }
+
     /**
      * Launch an share client
      * @param activity An Activity context for launching the email client

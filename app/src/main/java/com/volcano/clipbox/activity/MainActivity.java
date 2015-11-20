@@ -1,47 +1,69 @@
 package com.volcano.clipbox.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.volcano.clipbox.ClipBoxApplication;
 import com.volcano.clipbox.Intents;
 import com.volcano.clipbox.R;
-import com.volcano.clipbox.Util.Utils;
 import com.volcano.clipbox.analytics.MixpanelManager;
 import com.volcano.clipbox.fragment.ClipListFragment;
+import com.volcano.clipbox.fragment.ClipListFragment.ActionModeListener;
 import com.volcano.clipbox.service.ClipboardListenerService;
 import com.volcano.clipbox.view.VlSearchView;
+
+import org.json.JSONObject;
+
+import ir.adad.client.AdListener;
+import ir.adad.client.AdView;
+import ir.adad.client.Adad;
 
 /**
  * Main Activity
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private ClipListFragment mFragment;
     private VlSearchView mSearchView;
-    private MenuItem mSearchMenu;
     private MenuItem mFavoriteMenu;
+
+    private ActionMode mActionMode;
 
     private boolean mFavoriteLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize ads
+        Adad.initialize(ClipBoxApplication.getInstance());
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mFragment = (ClipListFragment) getFragmentManager().findFragmentById(R.id.fragment_clipboard);
+        mFragment.setOnActionModeListener(new ActionModeListener() {
+            @Override
+            public void onClipSelected(int size) {
+                if (size > 0 && mActionMode == null) {
+                    mActionMode = startSupportActionMode(new ActionModeCallback());
+                }
+                else if (size == 0 && mActionMode != null) {
+                    mActionMode.finish();
+                }
+
+                if (mActionMode != null) {
+                    mActionMode.setTitle(getString(R.string.label_clip_selected, size));
+                }
+            }
+        });
 
         // Start service
         startService(new Intent(getBaseContext(), ClipboardListenerService.class));
@@ -49,6 +71,29 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState != null) {
             mFavoriteLoaded = savedInstanceState.getBoolean(Intents.KEY_FAVORITE);
         }
+
+        // Setup ads
+        final AdView adView = (AdView) findViewById(R.id.banner_ad_view);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_ADAD_AD_LOADED);
+            }
+
+            @Override
+            public void onAdFailedToLoad() {
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_ADAD_AD_FAILED_TO_LOAD);
+            }
+
+            @Override
+            public void onMessageReceive(JSONObject jsonObject) {
+
+            }
+
+            @Override
+            public void onRemoveAdsRequested() {
+            }
+        });
     }
 
     @Override
@@ -84,10 +129,10 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        mSearchMenu = menu.findItem(R.id.menu_search);
+        MenuItem searchMenu = menu.findItem(R.id.menu_search);
         mFavoriteMenu = menu.findItem(R.id.menu_favorite);
 
-        mSearchView = (VlSearchView) mSearchMenu.getActionView();
+        mSearchView = (VlSearchView) searchMenu.getActionView();
         mSearchView.setQueryHint(getString(R.string.label_enter_word));
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -129,31 +174,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
 
-        if(id == R.id.menu_about) {
-            final LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.dialog_about, null);
-            final TextView textVersion = (TextView) layout.findViewById(R.id.text_app_version);
-            textVersion.setText(Utils.getAppVersionName());
-
-            new AlertDialogWrapper.Builder(this)
-                    .setTitle(getString(R.string.label_about))
-                    .setView(layout)
-                    .setButtonColor(getResources().getColor(R.color.primary_dark))
-                    .setNegativeButton(R.string.button_close_uppercase, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
-        }
-        else if (id == R.id.menu_share) {
-            MixpanelManager.getInstance().track(MixpanelManager.EVENT_SHARE_APP);
-
-            final String googlePlayLink = String.format("https://play.google.com/store/apps/details?id=%s", ClipBoxApplication.getInstance().getPackageName());
-            final String cafeBazarLink = String.format("http://cafebazaar.ir/app/%s/", ClipBoxApplication.getInstance().getPackageName());
-
-            Utils.launchShareClient(this,
-                    getString(R.string.share_subject, getString(R.string.app_name), Utils.getAppVersionName()),
-                    getString(R.string.share_body, googlePlayLink, cafeBazarLink));
+        if(id == R.id.menu_settings) {
+            startActivity(new Intent(ClipBoxApplication.getInstance(), SettingActivity.class));
         }
         else if (id == R.id.menu_refresh) {
             mFragment.loadClips();
@@ -172,5 +194,36 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return true;
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_action_clip_list, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.menu_delete) {
+                mFragment.deleteSelectedClips();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mFragment.deselectClips();
+            mActionMode = null;
+        }
     }
 }

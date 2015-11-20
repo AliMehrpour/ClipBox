@@ -3,8 +3,10 @@ package com.volcano.clipbox.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +34,17 @@ import java.util.ArrayList;
  */
 public class ClipListFragment extends Fragment {
 
-    private ArrayList<Clip> mClips = new ArrayList<>();
     private ListView mClipList;
+
+    private final ArrayList<Clip> mClips = new ArrayList<>();
     private final ClipAdapter mClipAdapter = new ClipAdapter();
+    private final SparseArray<Clip> mSelectedClips = new SparseArray<>();
+
+    public ActionModeListener mActionModeListener;
+
+    public interface ActionModeListener {
+        void onClipSelected(int size);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,19 +61,7 @@ public class ClipListFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Clip clip = mClips.get(position);
-                new AlertDialogWrapper.Builder(getActivity())
-                        .setMessage(R.string.alert_delete_clip)
-                        .setButtonColor(getResources().getColor(R.color.primary_dark))
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(R.string.button_delete_uppercase, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mClips.remove(clip);
-                                DatabaseHelper.getInstance().deleteClip(clip);
-                                mClipAdapter.notifyDataSetChanged();
-                            }
-                        }).show();
-
+                selectClipView(clip);
                 return true;
             }
         });
@@ -71,67 +69,43 @@ public class ClipListFragment extends Fragment {
         mClipList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                final EditText clipEdit = (EditText) View.inflate(ClipBoxApplication.getInstance(),
-                        R.layout.dialog_edit_clip, null);
-                final Clip clip = mClips.get(position);
-                clipEdit.setText(clip.value);
-                clipEdit.setSelection(clip.value.length());
-
-                new AlertDialogWrapper.Builder(getActivity())
-                        .setTitle(getString(R.string.label_dialog_edit_clip))
-                        .setView(clipEdit)
-                        .setMessage(clip.value)
-                        .setButtonColor(getResources().getColor(R.color.primary_dark))
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                final Handler handler = new Handler();
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        clip.createDate = Utils.getDate();
-                                        clip.value = clipEdit.getText().toString();
-                                        if (DatabaseHelper.getInstance().updateClip(clip)) {
-                                            handler.post(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    MixpanelManager.getInstance().track(MixpanelManager.EVENT_EDIT_CLIP_ITEM);
-
-                                                    Utils.showToast(getString(R.string.label_clip_edited));
-                                                    mClips.set(position, clip);
-                                                    mClipAdapter.notifyDataSetChanged();
-                                                }
-                                            });
-                                        }
-                                    }
-                                }).start();
-                            }
-                        })
-                        .show();
+                if (mSelectedClips.size() > 0) {
+                    selectClipView(mClips.get(position));
+                }
+                else {
+                    showEditClipDialog(position);
+                }
             }
         });
     }
 
+    /**
+     * Load all clips
+     */
     public void loadClips() {
         loadClips(null);
     }
 
+    /**
+     * Load clips filter by query
+     * @param query The string query
+     */
     public void loadClips(final String query) {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mClips = DatabaseHelper.getInstance().getClips(query);
+                mClips.clear();
+                mClips.addAll(DatabaseHelper.getInstance().getClips(query));
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         mClipAdapter.notifyDataSetChanged();
-                        if (PrefUtils.getPref(PrefUtils.PREF_DISPLAY_NEW_FEATURE_1_1_0, true)) {
+                        if (PrefUtils.getPref(PrefUtils.PREF_DISPLAY_NEW_FEATURE_1_2_0, true)) {
                             if (mClips.size() > 0) {
                                 mClipList.performItemClick(null, 0, 0);
                             }
-                            PrefUtils.setPref(PrefUtils.PREF_DISPLAY_NEW_FEATURE_1_1_0, false);
+                            PrefUtils.setPref(PrefUtils.PREF_DISPLAY_NEW_FEATURE_1_2_0, false);
                         }
                     }
                 });
@@ -141,12 +115,16 @@ public class ClipListFragment extends Fragment {
         }).start();
     }
 
+    /**
+     * Load favorite clips
+     */
     public void loadFavoriteClips() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mClips = DatabaseHelper.getInstance().getFavoriteClips();
+                mClips.clear();
+                mClips.addAll(DatabaseHelper.getInstance().getFavoriteClips());
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -155,6 +133,114 @@ public class ClipListFragment extends Fragment {
                 });
             }
         }).start();
+    }
+
+    /**
+     * Set the {@link ActionModeListener}
+     * @param listener The listener
+     */
+    public void setOnActionModeListener(ActionModeListener listener) {
+        mActionModeListener = listener;
+    }
+
+    /**
+     * Delete selected clips
+     */
+    public void deleteSelectedClips() {
+        new AlertDialogWrapper.Builder(getActivity())
+                .setMessage(R.string.alert_delete_clip)
+                .setButtonColor(getResources().getColor(R.color.primary_dark))
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.button_delete_uppercase, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final Handler handler = new Handler();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DatabaseHelper.getInstance().deleteClips(mSelectedClips);
+
+                                final int size = mSelectedClips.size();
+                                for (int i = 0; i < size; i++) {
+                                    final Clip clip = mSelectedClips.get(mSelectedClips.keyAt(i));
+                                    if (mClips.contains(clip)) {
+                                        mClips.remove(clip);
+                                    }
+                                }
+                                mSelectedClips.clear();
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mActionModeListener.onClipSelected(0);
+                                        mClipAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }).start();
+                    }
+                }).show();
+    }
+
+    /**
+     * Deselect clips
+     */
+    public void deselectClips() {
+        mSelectedClips.clear();
+        mClipAdapter.notifyDataSetChanged();
+    }
+
+    private void showEditClipDialog(final int position) {
+        final EditText clipEdit = (EditText) View.inflate(ClipBoxApplication.getInstance(),
+                R.layout.dialog_edit_clip, null);
+        final Clip clip = mClips.get(position);
+        clipEdit.setText(clip.value);
+        clipEdit.setSelection(clip.value.length());
+
+        new AlertDialogWrapper.Builder(getActivity())
+                .setTitle(getString(R.string.label_dialog_edit_clip))
+                .setView(clipEdit)
+                .setMessage(clip.value)
+                .setButtonColor(getResources().getColor(R.color.primary_dark))
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final Handler handler = new Handler();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                clip.createDate = Utils.getDate();
+                                clip.value = clipEdit.getText().toString();
+                                if (DatabaseHelper.getInstance().updateClip(clip)) {
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            MixpanelManager.getInstance().track(MixpanelManager.EVENT_EDIT_CLIP_ITEM);
+
+                                            Utils.showToast(getString(R.string.label_clip_edited));
+                                            mClips.set(position, clip);
+                                            mClipAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                    }
+                })
+                .show();
+    }
+
+    private void selectClipView(Clip clip) {
+        if (mSelectedClips.get(clip.id) == null) {
+            mSelectedClips.put(clip.id, clip);
+        }
+        else {
+            mSelectedClips.delete(clip.id);
+        }
+
+        mClipAdapter.notifyDataSetChanged();
+
+        mActionModeListener.onClipSelected(mSelectedClips.size());
     }
 
     private class ClipAdapter extends BaseAdapter {
@@ -184,7 +270,10 @@ public class ClipListFragment extends Fragment {
             else {
                 view = new ClipItem(getActivity());
             }
-            view.setClip((Clip) getItem(position));
+
+            final Clip clip = (Clip) getItem(position);
+            view.setClip(clip);
+            view.setBackgroundColor((mSelectedClips.get(clip.id) != null) ? Color.LTGRAY : Color.TRANSPARENT);
 
             return view;
         }
