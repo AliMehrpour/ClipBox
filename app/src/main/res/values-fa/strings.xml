@@ -9,6 +9,9 @@
     <string name="button_copy_uppercase">کپی</string>
     <string name="button_delete_uppercase">حذف</string>
 
+    <string name="email_choose_app_title">اشتراک از طریق...</string>
+    <string name="email_subject_bug_report" formatted="false">%s (version %s)</string>
+
     <string name="label_about">درباره</string>
     <string name="label_about_dialog_content_general">ابزاری جهت مدیریت کلیپ بورد با قابلیت های ذخیره سازی، ویرایش و به اشتراک گذاری مطالب مورد علاقه با سایر دوستان
         \n\nCopyright © 2015 Volcano.</string>
