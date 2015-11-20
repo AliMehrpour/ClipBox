@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="@string/preference_app_setting_category_title">
+
+        <SwitchPreference
+            android:key="@string/preference_app_setting_confirm_copy_key"
+            android:title="@string/preference_app_setting_confirm_copy_title"
+            android:summary="@string/preference_app_setting_confirm_copy_summery"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_other_category_title">
+
+        <Preference
+            android:key="@string/preference_other_share_key"
+            android:title="@string/preference_other_share_title"/>
+
+        <Preference
+            android:key="@string/preference_other_rate_key"
+            android:title="@string/preference_other_rate_title"/>
+
+        <Preference
+            android:key="@string/preference_other_feedback_key"
+            android:title="@string/preference_other_feedback_title"/>
+
+        <Preference
+            android:key="@string/preference_other_about_key"
+            android:title="@string/preference_other_about_title"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

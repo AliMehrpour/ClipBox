@@ -1,21 +1,27 @@
 <resources>
     <string name="app_name">کلیپ باکس</string>
 
+    <string name="alert_copy_clip">در کلیپ باکس کپی شود؟</string>
     <string name="alert_delete_clip">حذف شود ؟</string>
 
+    <string name="button_cancel_uppercase">انصراف</string>
     <string name="button_close_uppercase">بستن</string>
+    <string name="button_copy_uppercase">کپی</string>
     <string name="button_delete_uppercase">حذف</string>
 
     <string name="label_about">درباره</string>
     <string name="label_about_dialog_content_general">ابزاری جهت مدیریت کلیپ بورد با قابلیت های ذخیره سازی، ویرایش و به اشتراک گذاری مطالب مورد علاقه با سایر دوستان
         \n\nCopyright © 2015 Volcano.</string>
     <string name="label_clip_edited">ویرایش انجام شد</string>
+    <string name="label_clip_selected">%d انتخاب شده</string>
+    <string name="label_delete">حذف</string>
     <string name="label_dialog_edit_clip">ویرایش</string>
     <string name="label_enter_word">مورد جستجو…</string>
     <string name="label_favorite">موردعلاقه</string>
     <string name="label_no_category">بدون گروه</string>
     <string name="label_refresh">بازخوانی</string>
     <string name="label_search">جستجو</string>
+    <string name="label_settings">تنظیمات</string>
     <string name="label_share">اشتراک</string>
     <string name="label_share_choose_app">اشتراک از طریق…</string>
 
@@ -29,7 +35,24 @@
         &#160;&#160;&#8226;&#160;&#160;امکان افزودن کلیپ به لیست علاقمندی\n
         &#160;&#160;&#8226;&#160;&#160;مشاهده لیست علاقمندی بوسیله آیکن ستاره\n
         &#160;&#160;&#8226;&#160;&#160;نگه داشتن روی کلیپ جهت حذف آن\n
-     </string>
+    </string>
+    <string name="label_intro_version_1_2_0">امکانات جدید اضافه شده در نسخه ۱.۲.۰\n
+        &#160;&#160;&#8226;&#160;&#160;امکان تایید کپی در کلیپ باکس\n
+        &#160;&#160;&#8226;&#160;&#160;افزودن صفحه تنظیمات\n
+        &#160;&#160;&#8226;&#160;&#160;امکان حذف همزمان چند کلیپ با نگه داشتن کلیک\n
+        &#160;&#160;&#8226;&#160;&#160;پشتیبانی از زبان های راست به چپ
+    </string>
+
+    <string name="preference_app_setting_category_title">کلیپ</string>
+
+    <string name="preference_app_setting_confirm_copy_title">تایید کپی</string>
+    <string name="preference_app_setting_confirm_copy_summery">تایید کپی در کلیپ باکس؟</string>
+
+    <string name="preference_other_about_title">درباره</string>
+    <string name="preference_other_category_title">دیگر</string>
+    <string name="preference_other_feedback_title">نظر دهی</string>
+    <string name="preference_other_rate_title">امتیاز دهی</string>
+    <string name="preference_other_share_title">اشتراک گذاری</string>
 
     <string name="share_subject">برنامه کلیپ باکس</string>
     <string name="share_body" formatted="false">کلیپ باکس ابزاری است جهت مدیریت کلیپ بورد با امکانات ذخیره سازی، ویرایش و به اشتراک گذاری مطالب موردعلاقه با سایر دوستان.
@@ -40,6 +63,7 @@
 برنامه در کافه بازار
  \n%s</string>
 
+    <string name="toast_load_email_client_failed">برنامه لازم جهت ارسال ایمیل بر روی دستگاه یافت نشد</string>
     <string name="toast_load_share_client_failed">برنامه مناسب اشتراک گذاری بر روی دستگاه یافت نشد</string>
     <string name="toast_copied_clipbox">در کلیپ باکس کپی شد</string>
 

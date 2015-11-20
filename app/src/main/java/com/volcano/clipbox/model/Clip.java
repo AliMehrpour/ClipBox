@@ -31,4 +31,14 @@ public class Clip {
     public Clip toggleFavorite() {
         return new Clip(id, value, createDate, !favorite);
     }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o != null && id == ((Clip) o).id);
+    }
 }
