@@ -12,6 +12,7 @@ public final class PrefUtils {
 
     public static final String PREF_TRACK_APP_INSTALLED = "track_app_installed";
     public static final String PREF_DISPLAY_NEW_FEATURE_1_1_0 = "display_new_feature_1_1_0";
+    public static final String PREF_DISPLAY_NEW_FEATURE_1_2_0 = "display_new_feature_1_2_0";
 
     public static SharedPreferences getPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(ClipBoxApplication.getInstance());

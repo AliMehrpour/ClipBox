@@ -40,5 +40,21 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <meta-data
+            android:name="AdadToken"
+            android:value="b2c9dffc956344afa318ea80e1a069f5" />
+        <meta-data
+            android:name="AdadBannersEnabledOnStart"
+            android:value="true" />
+        <meta-data
+            android:name="AdadTestMode"
+            android:value="false" />
+        <meta-data
+            android:name="AdadLogging"
+            android:value="true" />
+        <meta-data
+            android:name="AdadLoggingLevel"
+            android:value="debug" />
+
     </application>
 </manifest>

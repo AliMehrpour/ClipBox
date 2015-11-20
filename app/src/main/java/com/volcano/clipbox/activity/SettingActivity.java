@@ -2,7 +2,7 @@ package com.volcano.clipbox.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -11,7 +11,7 @@ import com.volcano.clipbox.R;
 /**
  * Settings Activity for ClipBox
  */
-public class SettingActivity extends ActionBarActivity {
+public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

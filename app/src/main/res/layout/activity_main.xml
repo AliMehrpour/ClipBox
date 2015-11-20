@@ -18,11 +18,19 @@
         android:layout_height="6dp"
         android:background="@drawable/toolbar_shadow" />
 
+    <ir.adad.client.Banner
+        android:id="@+id/banner_ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
     <fragment
         android:id="@+id/fragment_clipboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
+        android:layout_above="@id/banner_ad_view"
         android:name="com.volcano.clipbox.fragment.ClipListFragment" />
 
 </RelativeLayout>

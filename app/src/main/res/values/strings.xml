@@ -15,6 +15,8 @@
     <string name="label_about">About</string>
     <string name="label_about_dialog_content_general">An enhanced clipboard manager to save, edit and share your favorite text.\n\nCopyright © 2015 Volcano.</string>
     <string name="label_clip_edited">Text Edited</string>
+    <string name="label_clip_selected">%d selected</string>
+    <string name="label_delete">Delete</string>
     <string name="label_dialog_edit_clip">Edit text</string>
     <string name="label_enter_word">Enter word…</string>
     <string name="label_favorite">Favorite</string>
@@ -34,8 +36,14 @@
         &#160;&#160;&#8226;&#160;&#160;Add Search functionality\n
         &#160;&#160;&#8226;&#160;&#160;Mark your clip texts as favorite\n
         &#160;&#160;&#8226;&#160;&#160;See favorite clips via Favorite icon in action bar\n
-        &#160;&#160;&#8226;&#160;&#160;Use Longclick on clips to Delete\n
-     </string>
+        &#160;&#160;&#8226;&#160;&#160;Use LongClick on clips to Delete\n
+    </string>
+    <string name="label_intro_version_1_2_0">New Features in ClipBox Version 1.2.0:\n
+        &#160;&#160;&#8226;&#160;&#160;Confirm copy texts to ClipBox\n
+        &#160;&#160;&#8226;&#160;&#160;Added setting screen\n
+        &#160;&#160;&#8226;&#160;&#160;Multiple delete clips capability (Long click)\n
+        &#160;&#160;&#8226;&#160;&#160;Support right to left languages
+    </string>
 
     <string name="preference_app_setting_category_title">CLIP</string>
     <string name="preference_app_setting_confirm_copy_title">Copy Confirm</string>
