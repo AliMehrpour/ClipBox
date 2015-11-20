@@ -40,9 +40,10 @@
     </string>
     <string name="label_intro_version_1_2_0">New Features in ClipBox Version 1.2.0:\n
         &#160;&#160;&#8226;&#160;&#160;Confirm copy texts to ClipBox\n
-        &#160;&#160;&#8226;&#160;&#160;Add Setting\n
-        &#160;&#160;&#8226;&#160;&#160;See Advertisement\n
-     </string>
+        &#160;&#160;&#8226;&#160;&#160;Added setting screen\n
+        &#160;&#160;&#8226;&#160;&#160;Multiple delete clips capability (Long click)\n
+        &#160;&#160;&#8226;&#160;&#160;Support right to left languages
+    </string>
 
     <string name="preference_app_setting_category_title">CLIP</string>
     <string name="preference_app_setting_confirm_copy_title">Copy Confirm</string>
