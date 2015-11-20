@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.volcano.clipbox.ClipBoxApplication;
 import com.volcano.clipbox.R;
@@ -84,20 +85,42 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG, "A new clip is added to database.");
     }
 
+    @SuppressWarnings("unused")
     public synchronized void deleteClip(Clip clip) {
         final SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_CLIPS, COLUMN_ID + " = ?", new String[]{ String.valueOf(clip.id) });
+        db.delete(TABLE_CLIPS, COLUMN_ID + " = ?", new String[]{String.valueOf(clip.id)});
         closeDatabase(db);
 
         Log.i(TAG, "Clip deleted from database.");
+    }
+
+    public synchronized void deleteClips(SparseArray<Clip> clips) {
+        final StringBuilder sb = new StringBuilder();
+        boolean firstTime = true;
+        final int size = clips.size();
+        for (int i = 0; i < size; i++) {
+            final Clip clip = clips.get(clips.keyAt(i));
+
+            if (firstTime) {
+                firstTime = false;
+            } else {
+                sb.append(",");
+            }
+            sb.append(clip.id);
+        }
+
+        final SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(String.format("DELETE FROM " + TABLE_CLIPS + " WHERE " + COLUMN_ID + " IN (%s);", sb));
+        closeDatabase(db);
+
+        Log.i(TAG, size + " clip(s) deleted from database.");
     }
 
     public synchronized ArrayList<Clip> getClips(String query) {
         final ArrayList<Clip> clips = new ArrayList<>();
         final SQLiteDatabase db = this.getReadableDatabase();
         final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CLIPS +
-                (TextUtils.isEmpty(query) ? "" : " WHERE " + COLUMN_VALUE + " LIKE '%" + query + "%'")
-                + " ORDER BY " + COLUMN_CREATE_DATE + " DESC", null);
+                (TextUtils.isEmpty(query) ? "" : " WHERE " + COLUMN_VALUE + " LIKE '%" + query + "%'") + " ORDER BY " + COLUMN_CREATE_DATE + " DESC", null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

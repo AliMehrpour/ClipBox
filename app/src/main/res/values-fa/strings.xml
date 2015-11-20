@@ -6,13 +6,15 @@
 
     <string name="button_cancel_uppercase">انصراف</string>
     <string name="button_close_uppercase">بستن</string>
-    <string name="button_copy_uppercase">کپی شود</string>
+    <string name="button_copy_uppercase">کپی</string>
     <string name="button_delete_uppercase">حذف</string>
 
     <string name="label_about">درباره</string>
     <string name="label_about_dialog_content_general">ابزاری جهت مدیریت کلیپ بورد با قابلیت های ذخیره سازی، ویرایش و به اشتراک گذاری مطالب مورد علاقه با سایر دوستان
         \n\nCopyright © 2015 Volcano.</string>
     <string name="label_clip_edited">ویرایش انجام شد</string>
+    <string name="label_clip_selected">%d انتخاب شده</string>
+    <string name="label_delete">حذف</string>
     <string name="label_dialog_edit_clip">ویرایش</string>
     <string name="label_enter_word">مورد جستجو…</string>
     <string name="label_favorite">موردعلاقه</string>

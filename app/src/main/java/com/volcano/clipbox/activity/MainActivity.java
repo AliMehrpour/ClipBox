@@ -2,7 +2,8 @@ package com.volcano.clipbox.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import com.volcano.clipbox.Intents;
 import com.volcano.clipbox.R;
 import com.volcano.clipbox.analytics.MixpanelManager;
 import com.volcano.clipbox.fragment.ClipListFragment;
+import com.volcano.clipbox.fragment.ClipListFragment.ActionModeListener;
 import com.volcano.clipbox.service.ClipboardListenerService;
 import com.volcano.clipbox.view.VlSearchView;
 
@@ -25,11 +27,13 @@ import ir.adad.client.Adad;
 /**
  * Main Activity
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private ClipListFragment mFragment;
     private VlSearchView mSearchView;
     private MenuItem mFavoriteMenu;
+
+    private ActionMode mActionMode;
 
     private boolean mFavoriteLoaded;
 
@@ -45,6 +49,21 @@ public class MainActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         mFragment = (ClipListFragment) getFragmentManager().findFragmentById(R.id.fragment_clipboard);
+        mFragment.setOnActionModeListener(new ActionModeListener() {
+            @Override
+            public void onClipSelected(int size) {
+                if (size > 0 && mActionMode == null) {
+                    mActionMode = startSupportActionMode(new ActionModeCallback());
+                }
+                else if (size == 0 && mActionMode != null) {
+                    mActionMode.finish();
+                }
+
+                if (mActionMode != null) {
+                    mActionMode.setTitle(getString(R.string.label_clip_selected, size));
+                }
+            }
+        });
 
         // Start service
         startService(new Intent(getBaseContext(), ClipboardListenerService.class));
@@ -58,12 +77,12 @@ public class MainActivity extends ActionBarActivity {
         adView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                MixpanelManager.getInstance().track(MixpanelManager.EVENT_AD_LOADED);
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_ADAD_AD_LOADED);
             }
 
             @Override
             public void onAdFailedToLoad() {
-                MixpanelManager.getInstance().track(MixpanelManager.EVENT_AD_FAILED_TO_LOAD);
+                MixpanelManager.getInstance().track(MixpanelManager.EVENT_ADAD_AD_FAILED_TO_LOAD);
             }
 
             @Override
@@ -73,7 +92,6 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onRemoveAdsRequested() {
-
             }
         });
     }
@@ -176,5 +194,36 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return true;
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_action_clip_list, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.menu_delete) {
+                mFragment.deleteSelectedClips();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mFragment.deselectClips();
+            mActionMode = null;
+        }
     }
 }
